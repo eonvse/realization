@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('initiator_id');
             $table->string('name');
             $table->text('content');
-            $table->unsignedInteger('zni');
+            $table->unsignedBigInteger('zni');
             $table->date('dateZni');
-            $table->unsignedInteger('doi')->nullable();
+            $table->unsignedBigInteger('doi')->nullable();
             $table->date('dateDoi')->nullable();
             $table->boolean('isDone')->default(0);
             $table->date('dateDone')->nullable();

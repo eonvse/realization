@@ -49,4 +49,15 @@ class ClusterData
 
 		Cluster::create($dataForCreate);
 	}
+
+	public static function get($id)
+	{
+		return Cluster::find($id);
+	}
+
+	public static function destroy($id)
+	{
+		Cluster::find($id)->delete();
+	}
+
 }

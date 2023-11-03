@@ -15,6 +15,7 @@ class Dashboard extends Component
 
     public $search, $sortField, $sortDirection;
     public $showCreate, $showDelete;
+    public $item;
 
     public $initiators;
     
@@ -48,6 +49,8 @@ class Dashboard extends Component
         $this->newName = $this->newContent = $this->newInitiator = $this->newZNI = $this->newDateZNI = $this->newDOI = $this->newDateDOI = '';
 
         $this->initiators = ClusterData::getInitiatorsList();
+        
+        $this->item = array('zni'=>'','name'=>'','content'=>'','id'=>'');
 
     }
 
@@ -89,6 +92,36 @@ class Dashboard extends Component
         $this->cancelCreate();
         $this->initiators = ClusterData::getInitiatorsList();
     }
+
+    //------------------------------------------------    
+    //-------Удаление элемента------------------------
+    //------------------------------------------------    
+    public function delete($id)
+    {
+        $this->showDelete = true;
+        $deleteItem = ClusterData::get($id);
+        $this->item = array(
+            'zni'=>$deleteItem->zni ?? '',
+            'name'=>$deleteItem->name ?? '',
+            'content'=>$deleteItem->content ?? '',
+            'id'=>$deleteItem->id ?? '',
+            );
+
+    }
+
+    public function cancelDelete()
+    {
+        $this->showDelete = false;
+        $this->item = array('zni'=>'','name'=>'','content'=>'','id'=>'');
+    }
+
+
+    public function destroy()
+    {
+        ClusterData::destroy($this->item['id']);
+        $this->cancelDelete();
+    }
+
 
     public function render()
     {
