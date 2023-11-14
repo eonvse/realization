@@ -15,7 +15,10 @@ class Dashboard extends Component
 
     public $search, $sortField, $sortDirection;
     public $showCreate, $showDelete;
-    public $item;
+    public $delItem;
+
+    public $filter = [];
+    public $statuses = [];
 
     public $initiators;
     
@@ -40,6 +43,8 @@ class Dashboard extends Component
     #[Rule('date', message: 'Неправильная дата')]
     public $newDateDOI;
 
+    public $yearsZNI;
+
     public function mount()
     {
         $this->search = '';
@@ -50,7 +55,13 @@ class Dashboard extends Component
 
         $this->initiators = ClusterData::getInitiatorsList();
         
-        $this->item = array('zni'=>'','name'=>'','content'=>'','id'=>'');
+        $this->delItem = array('zni'=>'','name'=>'','initiator'=>'','id'=>'');
+
+        $this->yearsZNI = ClusterData::getYearsZNI();
+
+        $this->filter = ['year'=>date('Y'),'status'=>0];
+
+        $this->statuses = [0=>'Все',2=>'Выполненные',1=>'Невыполненные'];
 
     }
 
@@ -74,6 +85,7 @@ class Dashboard extends Component
     {
         $this->showCreate = false;
         $this->newName = $this->newContent = $this->newInitiator = $this->newZNI = $this->newDateZNI = $this->newDOI = $this->newDateDOI = '';
+        $this->resetValidation();
     }
 
     public function store()
@@ -96,29 +108,28 @@ class Dashboard extends Component
     //------------------------------------------------    
     //-------Удаление элемента------------------------
     //------------------------------------------------    
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->showDelete = true;
         $deleteItem = ClusterData::get($id);
-        $this->item = array(
+        $this->delItem = array(
             'zni'=>$deleteItem->zni ?? '',
             'name'=>$deleteItem->name ?? '',
-            'content'=>$deleteItem->content ?? '',
+            'initiator'=>$deleteItem->initiator->name ?? '',
             'id'=>$deleteItem->id ?? '',
             );
-
     }
 
     public function cancelDelete()
     {
         $this->showDelete = false;
-        $this->item = array('zni'=>'','name'=>'','content'=>'','id'=>'');
+        $this->delItem = array('zni'=>'','name'=>'','initiator'=>'','id'=>'');
     }
 
 
     public function destroy()
     {
-        ClusterData::destroy($this->item['id']);
+        ClusterData::destroy($this->delItem['id']);
         $this->cancelDelete();
     }
 
@@ -128,12 +139,16 @@ class Dashboard extends Component
         $data = array(
             'sortField'=> $this->sortField,
             'sortDirection'=> $this->sortDirection,
-            'search'=> $this->search
+            'search'=> $this->search,
+            'filter'=> $this->filter
         );
 
         $zni = ClusterData::indexWire($data);
 
         $zni = $zni->paginate(self::PER_PAGE);
+
+        $this->yearsZNI = ClusterData::getYearsZNI();
+
         return view('livewire.dashboard',['zni'=>$zni]);
     }
 }

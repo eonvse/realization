@@ -11,6 +11,8 @@ class Cluster extends Model
     protected $fillable = ['author_id','initiator_id','name','content','zni','dateZni','doi','dateDoi','isDone','dateDone'];
     protected $primaryKey = 'id';
 
+    protected $with = ['initiator'];
+
     public function initiator()
     {
         return $this->hasOne(Initiator::class,'id','initiator_id');
