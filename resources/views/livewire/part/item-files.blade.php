@@ -4,11 +4,10 @@
         @if ($showEdit)
             @error('modelContent') <div class="text-red-500">{{ $message }}</div> @enderror
         @endif
-        <div x-data="{ content: @entangle('modelContent') }" class="mb-3">
-            <div x-on:blur="content = $event.target.innerHTML" 
-                class="text-gray-600 text-sm p-1 {{ $showEdit ? 'border' : '' }}  rounded focus:outline-none focus:border-blue-400 focus:border-2" 
-                contentEditable="{{ $showEdit ? 'true' : 'false' }}">{!! $model->content !!}</div>
-        </div>
+        <x-input.div-editable editable="{{ $showEdit ? 'true' : 'false' }}" wire:model="modelContent">
+            {!! $model->content !!}
+        </x-input.div-editable>
+
     </div>
 	<div class="grid grid-cols-2 items-center mb-2">
 		<div><x-head.h2>Файлы</x-head.h2></div>
