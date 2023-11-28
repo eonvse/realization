@@ -79,8 +79,8 @@ class DashboardItem extends Component
         $this->modelContent = $this->model->content;
         $this->modelInitiator = $this->model->initiator->name;
         $this->modelDateZNI = $this->model->dateZni;
-        $this->modelDOI = $this->model->doi;
-        $this->modelDateDOI = $this->model->dateDoi;
+        $this->modelDOI = $this->model->doi ?? null;
+        $this->modelDateDOI = $this->model->dateDoi ?? null;
 
         $this->initiators = ClusterData::getInitiatorsList();
         $this->files = ClusterData::getFileList($this->modelId);
@@ -96,6 +96,8 @@ class DashboardItem extends Component
         $this->showEdit = false;
         $this->resetValidation();
     }
+
+
 
     public function store()
     {

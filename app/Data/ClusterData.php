@@ -96,7 +96,7 @@ class ClusterData
 
 	public static function getFileList($id)
 	{
-		return File::where('cluster_id','=',$id)->get();
+		return File::where('cluster_id','=',$id)->orderBy('name')->get();
 	}
 
 	public static function saveFile($data)
