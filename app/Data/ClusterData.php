@@ -26,9 +26,7 @@ class ClusterData
 
 
         if(!empty($data['search'])){
-           $zni->orWhere('name','like',"%".$data['search']."%");
-           $zni->orWhere('surname','like',"%".$data['search']."%");
-           $zni->orWhere('patronymic','like',"%".$data['search']."%");
+           $zni->where('zni','like',"%".$data['search']."%");
         }
 
 

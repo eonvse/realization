@@ -23,18 +23,29 @@
                                         sortable 
                                         wire:click="sortBy('zni')" 
                                         :direction="$sortField === 'zni' ? $sortDirection : null">№ ЗНИ</x-table.head>
-                        <x-table.head scope="col" 
+                        <x-table.head scope="col"
                                         sortable 
                                         wire:click="sortBy('dateZni')" 
                                         :direction="$sortField === 'dateZni' ? $sortDirection : null">Дата ЗНИ</x-table.head>                        
-                        <x-table.head>Инициатор</x-table.head>
-                        <x-table.head>Название</x-table.head>
-                        <x-table.head  scope="col" >ДОИ</x-table.head>
-                        <x-table.head scope="col" >Дата ДОИ</x-table.head>
-                        <x-table.head scope="col" >Дата выполнения</x-table.head>
-                        <x-table.head>...</x-table.head>
+                        <x-table.head rowspan=2>Инициатор</x-table.head>
+                        <x-table.head rowspan=2>Название</x-table.head>
+                        <x-table.head  scope="col" rowspan=2 >ДОИ</x-table.head>
+                        <x-table.head scope="col" rowspan=2 >Дата ДОИ</x-table.head>
+                        <x-table.head scope="col" rowspan=2 >Дата выполнения</x-table.head>
+                        <x-table.head rowspan=2>...</x-table.head>
 
                     </x-slot>
+                    <x-slot name="searching">
+                        <x-table.head colspan=2>
+                            <div class="flex">
+                                <x-input.text class="py-0 px-1 text-sm" wire:model.live="search" placeholder="Поиск по № ЗНИ..." />
+                                @if (!empty($search))
+                                <x-button.icon-cancel wire:click="$set('search', '')" title="Отменить" />
+                                @endif
+                            </div>    
+                        </x-table.head>
+                    </x-slot>
+
                     @forelse($zni as $item)
                     <x-table.row wire:loading.class.delay="bg-red-500" wire:key="{{ $item->id }}">
                         <x-table.cell class="tabular-nums">
