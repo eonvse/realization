@@ -62,11 +62,13 @@
                         </x-table.cell>
                         <x-table.cell class="tabular-nums text-gray-400 text-xs">{{ $item->doi }}</x-table.cell>
                         <x-table.cell class="tabular-nums text-gray-400 text-xs">{{ empty($item->dateDoi) ? '' : date('d.m.Y', strtotime($item->dateDoi)) }}</x-table.cell>
-                        <x-table.cell class="flex items-center">
-                            @if ($item->isDone)
-                            <div class="w-4 h-4 bg-green-600 rounded-full"></div>
-                            @endif
-                            <div class="grow text-center tabular-nums">{{ empty($item->dateDone) ? '' : date('d.m.Y', strtotime($item->dateDone)) }}</div>
+                        <x-table.cell>
+                            <div class="flex items-center"> 
+                                @if ($item->isDone)
+                                <div class="w-4 h-4 bg-green-600 rounded-full"></div>
+                                @endif
+                                <div class="grow text-center tabular-nums">{{ empty($item->dateDone) ? '' : date('d.m.Y', strtotime($item->dateDone)) }}</div>
+                            </div>
                         </x-table.cell>
                         <x-table.cell>
                             <div class="flex items-center">

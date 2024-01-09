@@ -59,7 +59,7 @@ class Dashboard extends Component
 
         $this->yearsZNI = ClusterData::getYearsZNI();
 
-        $this->filter = ['year'=>date('Y'),'status'=>0];
+        $this->filter = ['year'=>ClusterData::getMaxYearsZNI()->max_year,'status'=>0];
 
         $this->statuses = [0=>'Все',2=>'Выполненные',1=>'Невыполненные'];
 

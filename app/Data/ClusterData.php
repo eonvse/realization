@@ -123,5 +123,13 @@ class ClusterData
             ->toArray();
    }
 
+   public static function getMaxYearsZNI()
+   {
+		return DB::table('ZNI_year')
+             ->selectRaw('max(yearZni) as max_year')
+                ->groupBy('yearZni')
+                ->first();
+   }
+
 
 }
